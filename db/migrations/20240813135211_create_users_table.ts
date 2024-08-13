@@ -2,9 +2,12 @@ import type { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("users", (table) => {
-    table.increments("id").primary();
+    table.uuid("id").primary();
+    table.uuid("user_id").references("users.id").notNullable();
     table.string("name").notNullable();
-    table.string("email").notNullable().unique();
+    table.string("description").notNullable();
+    table.boolean("is_on_diet").notNullable();
+    table.date("date").notNullable();
     table.timestamps(true, true);
   });
 }
